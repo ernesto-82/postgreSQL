@@ -1,0 +1,12 @@
+# SECRETOS - Ignorar solo los .txt dentro de seguridad/
+seguridad/*.txt
+
+# LOGS - Ignorar los archivos .log
+*.log
+
+# BACKUPS
+*.bak
+
+# ENTORNO
+.env
+.env.*

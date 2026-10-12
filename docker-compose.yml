@@ -1,0 +1,48 @@
+services:
+  postgres-server:
+    image: postgres:16
+    container_name: postgres01
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_USER: admin
+      POSTGRES_DB: practica01
+
+    secrets:
+      - postgres_password
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres_net
+    volumes:
+      - data01:/var/lib/postgresql/data
+      #- ./config/99-custom.conf:/var/lib/postgresql/data/postgresql.auto.conf:ro
+      #- logs01:/var/log/postgresql
+    command: >
+      postgres
+      -c max_connections=150
+      -c shared_buffers=128MB
+      -c work_mem=16MB
+      -c logging_collector=on
+      -c log_directory=/var/log/postgresql
+      -c log_filename=postgresql-%Y-%m-%d.log
+      -c log_min_duration_statement=2000
+      -c listen_addresses=localhost
+    healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U admin -d practica01"]
+        interval: 10s
+        timeout: 5s
+        retries: 3
+    
+volumes:
+  data01:
+    driver: local
+  logs01:
+    driver: local
+networks:
+  postgres_net:
+    driver: bridge
+secrets:
+  postgres_password:
+    file: ./seguridad/postgres_password.txt
