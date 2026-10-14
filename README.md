@@ -11,7 +11,7 @@ Despliegue de PostgreSQL 16 en Docker Compose con:
 
 ## Video explicativo
 
--Enlace al video de la nube
+-Enlace al video de la nube https://drive.google.com/file/d/167gKYWRUmEa16tQ8gkZATw-zKg7lMnTY/view?usp=sharing
 
 ## Infraestructura del proyecto
 
